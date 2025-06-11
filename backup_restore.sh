@@ -1,71 +1,57 @@
 #!/bin/bash
 
-# Backup आणि Restore साठी आवश्यक directory
-BACKUP_DIR="/root/backups"
-RESTORE_DIR="/tmp/restore-check"
+# 📁 Default backup directory
+BACKUP_DIR="/home/ubuntu/backups"
+LOG_FILE="/var/log/backup_restore.log"
 
-# Timestamp format
-TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+# 📌 Create backup directory if not exists
+mkdir -p "$BACKUP_DIR"
+mkdir -p "$(dirname $LOG_FILE)"
 
-# Function: Backup
+# 🛠 Logging function
+log_action() {
+  echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+}
+
+# 🔄 Backup function
 backup() {
-    echo "📦 Backup सुरू करत आहे..."
+  TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+  BACKUP_FILE="$BACKUP_DIR/system_backup_$TIMESTAMP.tar.gz"
+  log_action "📦 Backup सुरू करत आहे..."
 
-    FILE_NAME="system_backup_${TIMESTAMP}.tar.gz"
-    FILE_PATH="${BACKUP_DIR}/${FILE_NAME}"
-
-    # Directory exists नसेल तर तयार करा
-    mkdir -p "$BACKUP_DIR"
-
-    # Backup command (basic system folders)
-    tar -czf "$FILE_PATH" /etc /var /home 2>/dev/null
-
-    if [[ $? -eq 0 ]]; then
-        echo "✅ Backup यशस्वी: $FILE_PATH"
-    else
-        echo "❌ Backup अयशस्वी"
-    fi
+  tar -czf "$BACKUP_FILE" /etc /home /var/log 2>> "$LOG_FILE"
+  if [ $? -eq 0 ]; then
+    log_action "✅ Backup यशस्वी: $BACKUP_FILE"
+  else
+    log_action "❌ Backup अयशस्वी"
+  fi
 }
 
-# Function: Restore
+# 🔁 Restore function
 restore() {
-    FILE_PATH=$1
-
-    if [[ -z "$FILE_PATH" ]]; then
-        echo "❗ कृपया restore साठी पूर्ण file path द्या."
-        echo "उदाहरण: ./backup_restore.sh restore /root/backups/system_backup_2025-06-11_10-57-46.tar.gz"
-        exit 1
-    fi
-
-    if [[ ! -f "$FILE_PATH" ]]; then
-        echo "❗ दिलेली फाईल सापडली नाही: $FILE_PATH"
-        exit 1
-    fi
-
-    echo "🔁 Restore सुरू आहे: $FILE_PATH"
-    mkdir -p "$RESTORE_DIR"
-    tar -xzf "$FILE_PATH" -C "$RESTORE_DIR"
-
-    if [[ $? -eq 0 ]]; then
-        echo "✅ Restore पूर्ण: $RESTORE_DIR मध्ये फाईल्स extract झाल्या."
+  if [ -f "$1" ]; then
+    log_action "♻️ Restore सुरू: $1"
+    tar -xzf "$1" -C / 2>> "$LOG_FILE"
+    if [ $? -eq 0 ]; then
+      log_action "✅ Restore यशस्वी"
     else
-        echo "❌ Restore मध्ये अडचण आली"
+      log_action "❌ Restore अयशस्वी"
     fi
+  else
+    log_action "❗ Restore साठी योग्य फाईल द्या"
+  fi
 }
 
-# Main logic
-case $1 in
-    backup)
-        backup
-        ;;
-    restore)
-        restore "$2"
-        ;;
-    *)
-        echo "❗ कृपया योग्य command वापरा: backup किंवा restore"
-        echo "उदाहरण:"
-        echo "  ./backup_restore.sh backup"
-        echo "  ./backup_restore.sh restore /root/backups/system_backup_YYYY-MM-DD_HH-MM-SS.tar.gz"
-        ;;
+# 🎯 Main function
+case "$1" in
+  backup)
+    backup
+    ;;
+  restore)
+    restore "$2"
+    ;;
+  *)
+    echo "🧾 वापर: $0 {backup|restore <backup-file-path>}"
+    ;;
 esac
 
