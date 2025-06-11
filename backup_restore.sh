@@ -1,52 +1,71 @@
 #!/bin/bash
 
-# Variables
+# Backup आणि Restore साठी आवश्यक directory
 BACKUP_DIR="/root/backups"
-TIMESTAMP=$(date +%F_%H-%M-%S)
-BACKUP_FILE="$BACKUP_DIR/system_backup_$TIMESTAMP.tar.gz"
 RESTORE_DIR="/tmp/restore-check"
 
-# Functions
-backup_system() {
+# Timestamp format
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+
+# Function: Backup
+backup() {
     echo "📦 Backup सुरू करत आहे..."
-    sudo mkdir -p $BACKUP_DIR
-    sudo tar -czf $BACKUP_FILE /etc /var /home 2>/dev/null
+
+    FILE_NAME="system_backup_${TIMESTAMP}.tar.gz"
+    FILE_PATH="${BACKUP_DIR}/${FILE_NAME}"
+
+    # Directory exists नसेल तर तयार करा
+    mkdir -p "$BACKUP_DIR"
+
+    # Backup command (basic system folders)
+    tar -czf "$FILE_PATH" /etc /var /home 2>/dev/null
+
     if [[ $? -eq 0 ]]; then
-        echo "✅ Backup यशस्वी: $BACKUP_FILE"
+        echo "✅ Backup यशस्वी: $FILE_PATH"
     else
         echo "❌ Backup अयशस्वी"
-        exit 1
     fi
 }
 
-restore_system() {
-    echo "🔁 Restore सुरू करत आहे..."
-    sudo mkdir -p $RESTORE_DIR
-    sudo tar -xzf $1 -C $RESTORE_DIR
+# Function: Restore
+restore() {
+    FILE_PATH=$1
+
+    if [[ -z "$FILE_PATH" ]]; then
+        echo "❗ कृपया restore साठी पूर्ण file path द्या."
+        echo "उदाहरण: ./backup_restore.sh restore /root/backups/system_backup_2025-06-11_10-57-46.tar.gz"
+        exit 1
+    fi
+
+    if [[ ! -f "$FILE_PATH" ]]; then
+        echo "❗ दिलेली फाईल सापडली नाही: $FILE_PATH"
+        exit 1
+    fi
+
+    echo "🔁 Restore सुरू आहे: $FILE_PATH"
+    mkdir -p "$RESTORE_DIR"
+    tar -xzf "$FILE_PATH" -C "$RESTORE_DIR"
+
     if [[ $? -eq 0 ]]; then
-        echo "✅ Restore यशस्वी: $RESTORE_DIR मध्ये फाईल्स"
+        echo "✅ Restore पूर्ण: $RESTORE_DIR मध्ये फाईल्स extract झाल्या."
     else
-        echo "❌ Restore अयशस्वी"
-        exit 1
+        echo "❌ Restore मध्ये अडचण आली"
     fi
 }
 
-# Main
-case "$1" in
+# Main logic
+case $1 in
     backup)
-        backup_system
+        backup
         ;;
     restore)
-        if [[ -f $2 ]]; then
-            restore_system $2
-        else
-            echo "❗ Restore साठी योग्य फाईल द्या"
-            exit 1
-        fi
+        restore "$2"
         ;;
     *)
-        echo "Usage: $0 {backup|restore <backup_file_path>}"
-        exit 1
+        echo "❗ कृपया योग्य command वापरा: backup किंवा restore"
+        echo "उदाहरण:"
+        echo "  ./backup_restore.sh backup"
+        echo "  ./backup_restore.sh restore /root/backups/system_backup_YYYY-MM-DD_HH-MM-SS.tar.gz"
         ;;
 esac
 
