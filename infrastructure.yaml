@@ -1,0 +1,9 @@
+servers:
+  web-01:
+    ssh_port: 22
+    encryption: false
+    backup: disabled
+  db-01:
+    ssh_port: 2222
+    encryption: true
+    backup: enabled

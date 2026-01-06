@@ -1,0 +1,24 @@
+Generated: 2026-01-06 06:51:17
+=====================================
+
+VULNERABILITY SUMMARY:
+- SAST Scans Completed: 1
+- Container Scans: 1  
+- Compliance Checks: 1
+- Security Incidents: 1
+
+CRITICAL FINDINGS:
+- SQL Injection vulnerabilities: 1
+- Outdated container images: 1
+- Encryption policy violations: 1
+
+RECOMMENDATIONS:
+1. Fix SQL injection by using parameterized queries
+2. Upgrade container base images to latest versions
+3. Enable encryption at rest for all servers
+4. Implement automated backup policies
+
+INCIDENT RESPONSE:
+- Brute force attacks blocked: 1
+- Automated responses triggered: 1
+- Mean time to response: 30 seconds
