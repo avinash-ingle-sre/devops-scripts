@@ -1,0 +1,20 @@
+{
+  "web_tier": {
+    "current_instances": 2,
+    "instance_type": "t3.medium",
+    "last_action": "none",
+    "last_action_time": null
+  },
+  "app_tier": {
+    "current_instances": 3,
+    "instance_type": "t3.large", 
+    "last_action": "none",
+    "last_action_time": null
+  },
+  "db_tier": {
+    "current_instances": 1,
+    "instance_type": "r5.xlarge",
+    "last_action": "none",
+    "last_action_time": null
+  }
+}

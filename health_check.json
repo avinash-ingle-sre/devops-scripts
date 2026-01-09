@@ -1,0 +1,19 @@
+[
+  {
+    "name": "JSONPlaceholder",
+    "status": "UP",
+    "code": 200,
+    "response_time": 379.32300567626953
+  },
+  {
+    "name": "GitHub API",
+    "status": "UP",
+    "code": 200,
+    "response_time": 269.1912651062012
+  },
+  {
+    "name": "Invalid URL",
+    "status": "DOWN",
+    "error": "<urlopen error [Errno -2] Name or service not known>"
+  }
+]

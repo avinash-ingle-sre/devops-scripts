@@ -1,0 +1,19 @@
+{
+  "application": {
+    "name": "",
+    "version": "1.0.0",
+    "port": 8080,
+    "environment": "dev",
+    "debug": false
+  },
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "name": "_db"
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "/var/log/.log"
+  },
+  "created": "2026-01-09T10:51:09.205245"
+}

@@ -1,0 +1,27 @@
+{
+  "web_tier": {
+    "min_instances": 2,
+    "max_instances": 10,
+    "target_cpu": 70,
+    "target_memory": 80,
+    "scale_up_threshold": 85,
+    "scale_down_threshold": 50,
+    "cooldown_minutes": 5
+  },
+  "app_tier": {
+    "min_instances": 3,
+    "max_instances": 8,
+    "target_cpu": 75,
+    "target_response_time": 200,
+    "scale_up_threshold": 85,
+    "scale_down_threshold": 45,
+    "cooldown_minutes": 10
+  },
+  "db_tier": {
+    "min_instances": 1,
+    "max_instances": 3,
+    "target_cpu": 80,
+    "scale_up_threshold": 85,
+    "cooldown_minutes": 15
+  }
+}

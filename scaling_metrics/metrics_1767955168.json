@@ -1,0 +1,20 @@
+{
+  "timestamp": 1767955168,
+  "web_tier": {
+    "avg_cpu": 58,
+    "avg_memory": 48,
+    "instance_count": 2,
+    "requests_per_second": 480
+  },
+  "app_tier": {
+    "avg_cpu": 75,
+    "avg_memory": 59,
+    "avg_response_time": 318,
+    "instance_count": 3
+  },
+  "db_tier": {
+    "avg_cpu": 56,
+    "active_connections": 127,
+    "instance_count": 1
+  }
+}
