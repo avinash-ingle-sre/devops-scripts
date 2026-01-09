@@ -1,0 +1,46 @@
+{
+  "web-01": {
+    "timestamp": "2026-01-09T11:00:52.274725",
+    "server": "web-01",
+    "cpu_percent": 33,
+    "memory_percent": 30,
+    "disk_percent": 52,
+    "network_in_mbps": 64,
+    "network_out_mbps": 76,
+    "active_connections": 328,
+    "response_time_ms": 156
+  },
+  "web-02": {
+    "timestamp": "2026-01-09T11:00:52.274828",
+    "server": "web-02",
+    "cpu_percent": 72,
+    "memory_percent": 53,
+    "disk_percent": 66,
+    "network_in_mbps": 45,
+    "network_out_mbps": 71,
+    "active_connections": 327,
+    "response_time_ms": 72
+  },
+  "api-01": {
+    "timestamp": "2026-01-09T11:00:52.274937",
+    "server": "api-01",
+    "cpu_percent": 43,
+    "memory_percent": 71,
+    "disk_percent": 51,
+    "network_in_mbps": 77,
+    "network_out_mbps": 42,
+    "active_connections": 192,
+    "response_time_ms": 76
+  },
+  "db-01": {
+    "timestamp": "2026-01-09T11:00:52.274991",
+    "server": "db-01",
+    "cpu_percent": 29,
+    "memory_percent": 30,
+    "disk_percent": 37,
+    "network_in_mbps": 11,
+    "network_out_mbps": 34,
+    "active_connections": 284,
+    "response_time_ms": 98
+  }
+}
