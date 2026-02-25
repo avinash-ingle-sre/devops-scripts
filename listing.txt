@@ -1,0 +1,3 @@
+total 0
+-rw-rw-r-- 1 student_04_84761f94d185 student_04_84761f94d185 0 Feb 25 15:12 listing.txt
+/home/student_04_84761f94d185/my_new_project
